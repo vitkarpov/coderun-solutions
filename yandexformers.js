@@ -1,3 +1,4 @@
+// (OPTION TWO) TLE, 44 test
 /**
  * @param {number} N - целое число, количество сотрудников готовых к объединению
  * @param {number[]} staff - массив длины N с грейдами доступных сотрудников
@@ -5,38 +6,50 @@
  * @returns {number}
  */
 module.exports = function (N, staff, K) {
-  const all = staff.reduce((acc, v) => acc + v, 0);
-  // если клавиатур хватает на всех,
-  // то можно собрать один большой яндексфомрер со всеми яндексойдами
-  if (K >= N) {
-    return all;
-  }
-  const heap = new MaxHeap();
-  // если K больше половины N,
-  // то выгоднее взять N - K минимальных элементов (потому что их меньше),
-  // и отнять ее от общей суммы чтобы получить сумму K максимальных элементов
-  if (K > N / 2) {
-    for (const v of staff) {
-      heap.insert(-v);
-    }
-    let r = 0;
-    let tail = N - K;
-    while (tail-- > 0) {
-      r += heap.extractMax();
-    }
-    return all + r;
-  }
-  // в противном случае, если K меньше половины N,
-  // то выгодно взять K максимальных элементов (потому что их меньше)
-  for (const v of staff) {
-    heap.insert(v);
-  }
+  staff.sort((a, b) => b - a);
   let r = 0;
-  while (K-- > 0 && !heap.isEmpty()) {
-    r += heap.extractMax();
+  let i = 0;
+  while (K-- > 0) {
+    r += staff[i++];
   }
   return r;
 };
+
+// (OPTION ONE) TLE, 44 test
+// /**
+//  * @param {number} N - целое число, количество сотрудников готовых к объединению
+//  * @param {number[]} staff - массив длины N с грейдами доступных сотрудников
+//  * @param {number} K - целое число, количество доступных клавиатур
+//  * @returns {number}
+//  */
+// module.exports = function (N, staff, K) {
+//   const all = staff.reduce((acc, v) => acc + v, 0);
+//   const heap = new MaxHeap();
+//   // если K больше половины N,
+//   // то выгоднее взять N - K минимальных элементов (потому что их меньше),
+//   // и отнять ее от общей суммы чтобы получить сумму K максимальных элементов
+//   if (K > N / 2) {
+//     for (const v of staff) {
+//       heap.insert(-v);
+//     }
+//     let r = 0;
+//     let tail = N - K;
+//     while (tail-- > 0) {
+//       r += heap.extractMax();
+//     }
+//     return all + r;
+//   }
+//   // в противном случае, если K меньше половины N,
+//   // то выгодно взять K максимальных элементов (потому что их меньше)
+//   for (const v of staff) {
+//     heap.insert(v);
+//   }
+//   let r = 0;
+//   while (K-- > 0 && !heap.isEmpty()) {
+//     r += heap.extractMax();
+//   }
+//   return r;
+// };
 
 /**
  * Ппредоставляет эффективную реализацию структуры данных максимальной кучи,
