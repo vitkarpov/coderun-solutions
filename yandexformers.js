@@ -1,4 +1,4 @@
-// (OPTION TWO) TLE, 44 test
+// (OPTION TWO)
 /**
  * @param {number} N - целое число, количество сотрудников готовых к объединению
  * @param {number[]} staff - массив длины N с грейдами доступных сотрудников
@@ -6,11 +6,20 @@
  * @returns {number}
  */
 module.exports = function (N, staff, K) {
-  staff.sort((a, b) => b - a);
+  const m = [];
+  for (let i = 0; i <= 25; i++) {
+    m[i] = 0;
+  }
+  for (const v of staff) {
+    m[v]++;
+  }
   let r = 0;
-  let i = 0;
-  while (K-- > 0) {
-    r += staff[i++];
+  for (let i = 0; i <= 25; i++) {
+    if (K <= 0) {
+      break;
+    }
+    r += (25 - i) * Math.min(K, m[25 - i]);
+    K -= m[25 - i];
   }
   return r;
 };
