@@ -5,7 +5,7 @@ module.exports = async function (urls, retryCount) {
     (data) =>
       data
         .filter((fetchResult) => fetchResult.data)
-        .map((fetchResult) => fetchResult.data)
+        .map((fetchResult) => fetchResult.data),
   );
 };
 
@@ -18,7 +18,7 @@ function processUrl(url, retryCount) {
       Promise.all([
         fetchResult,
         new Promise((resolve) => getHashByData(fetchResult.data, resolve)),
-      ])
+      ]),
     )
     .then(([fetchResult, expected]) => {
       if (fetchResult.hashSum && fetchResult.hashSum !== expected) {

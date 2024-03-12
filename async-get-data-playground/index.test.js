@@ -19,7 +19,7 @@ test("sanity check", async () => {
       "google.ru/api/analitics",
       "boston-dynamics.com/api/analitics",
     ],
-    4
+    4,
   );
   expect(data).toMatchInlineSnapshot(`
     [
