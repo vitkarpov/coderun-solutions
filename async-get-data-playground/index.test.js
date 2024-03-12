@@ -23,14 +23,9 @@ test("sanity check", async () => {
   );
   expect(data).toMatchInlineSnapshot(`
     [
-      {
-        "data": "Metrika data",
-        "hashSum": "#p628626401",
-      },
-      {
-        "data": "Google analytics data",
-        "hashSum": "#n1153734485",
-      },
+      "Metrika data",
+      "Google analytics data",
+      "Boston dynamics data",
     ]
   `);
 });

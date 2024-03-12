@@ -2,12 +2,18 @@ const { getHashByData, fetchData } = require("./utils");
 
 module.exports = async function (urls, retryCount) {
   return Promise.all(urls.map((url) => processUrl(url, retryCount))).then(
-    (data) => data.filter((fetchResult) => fetchResult.data)
+    (data) =>
+      data
+        .filter((fetchResult) => fetchResult.data)
+        .map((fetchResult) => fetchResult.data)
   );
 };
 
 function processUrl(url, retryCount) {
-  return withRetry(fetchData(url), retryCount)
+  if (retryCount < 0) {
+    return { data: undefined, hashSum: undefined };
+  }
+  return fetchData(url)
     .then((fetchResult) =>
       Promise.all([
         fetchResult,
@@ -16,18 +22,9 @@ function processUrl(url, retryCount) {
     )
     .then(([fetchResult, expected]) => {
       if (fetchResult.hashSum && fetchResult.hashSum !== expected) {
-        return processUrl(url, 1);
+        throw "Bad data";
       }
       return Promise.resolve(fetchResult);
-    });
-}
-
-async function withRetry(promise, retryCount) {
-  if (retryCount > 0) {
-    return promise.catch(() => withRetry(promise, retryCount - 1));
-  }
-  return {
-    data: undefined,
-    hashSum: undefined,
-  };
+    })
+    .catch(() => processUrl(url, retryCount - 1));
 }
