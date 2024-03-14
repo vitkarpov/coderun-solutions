@@ -19,7 +19,7 @@ describe("fuzzy", () => {
       }
       sort(arr1, m, arr2, n);
       expect(arr1).toEqual(expected);
-    }
+    },
   );
 });
 
