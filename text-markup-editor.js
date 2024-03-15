@@ -1,10 +1,8 @@
 function format(s) {
   return s
     .split("\n\n")
+    .filter(Boolean)
     .map((text) => {
-      if (!text) {
-        return "";
-      }
       const [first, ...rest] = text.split("\n").filter(Boolean);
 
       if (first.startsWith("=")) {
