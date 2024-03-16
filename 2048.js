@@ -75,6 +75,8 @@ module.exports = function solution(input, moves) {
       moveUp();
     } else if (move === "D") {
       moveDown();
+    } else {
+      throw move;
     }
   }
   return field;
