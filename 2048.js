@@ -14,7 +14,7 @@ module.exports = function solution(input, moves) {
   }
 
   function moveLeft() {
-    field = field.map((row) => valuesFirst(combine(row.reverse()).reverse()));
+    field = field.map((row) => valuesFirst(combine(row)));
   }
 
   function moveRight() {
@@ -26,12 +26,7 @@ module.exports = function solution(input, moves) {
       toField(
         x,
         valuesFirst(
-          combine([
-            field[3][x],
-            field[2][x],
-            field[1][x],
-            field[0][x],
-          ]).reverse()
+          combine([field[0][x], field[1][x], field[2][x], field[3][x]])
         )
       );
     }
