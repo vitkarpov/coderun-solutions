@@ -1,5 +1,5 @@
 module.exports = function solution(input, moves) {
-  let field = input.map((row) => [...row]);
+  let field = input.map((row) => [...row].map(Number));
 
   function zeroesFirst(vals) {
     const values = vals.filter((v) => v > 0);
