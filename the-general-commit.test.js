@@ -112,11 +112,11 @@ test.each([
 ])("%j", (input, output) => {
   if (output.error) {
     expect(() =>
-      getLastCommonCommitMessage(input.commits, input.branches)
+      getLastCommonCommitMessage(input.commits, input.branches),
     ).toThrow("No common commit");
   } else {
     expect(getLastCommonCommitMessage(input.commits, input.branches)).toBe(
-      output.message
+      output.message,
     );
   }
 });
